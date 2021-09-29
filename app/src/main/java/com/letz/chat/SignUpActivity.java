@@ -64,8 +64,6 @@ public class SignUpActivity extends AppCompatActivity
             if (!userEmail.equals("") && !userPassword.equals("") && !userName.equals("")) {
                 signup(userEmail, userPassword, userName);
             }
-
-
         });
 
     }

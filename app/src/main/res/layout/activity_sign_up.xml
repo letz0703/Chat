@@ -9,13 +9,13 @@
     <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/ic_baseline_perm_identity_24"
             android:id="@+id/ivCircle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:src="@color/purple_700" />
 
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"

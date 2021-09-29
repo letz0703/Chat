@@ -9,6 +9,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class ForgotActivity extends AppCompatActivity
 {
+    //test
 
     private TextInputEditText editTextForgot;
     private Button buttonForgot;

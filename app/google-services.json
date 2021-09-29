@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "969756567044",
-    "project_id": "letzchat-1b26c",
-    "storage_bucket": "letzchat-1b26c.appspot.com"
+    "project_number": "157997242662",
+    "project_id": "chat-8e2e2",
+    "storage_bucket": "chat-8e2e2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:969756567044:android:0036e44ef2da3498823751",
+        "mobilesdk_app_id": "1:157997242662:android:3697664f50317c792d49e7",
         "android_client_info": {
           "package_name": "com.letz.chat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "969756567044-ojmg4tjq7tge4oo4tpoa25ibit0rloio.apps.googleusercontent.com",
+          "client_id": "157997242662-mj86telc8eciuka9r7egj8dh5efv355e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDHS7Sgo6Nq_gLR4s11FSdi_bX1-cP4Ghs"
+          "current_key": "AIzaSyAmShiOUo2R9nhOGdHFV7W7tbtcdLbuDZk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "969756567044-ojmg4tjq7tge4oo4tpoa25ibit0rloio.apps.googleusercontent.com",
+              "client_id": "157997242662-mj86telc8eciuka9r7egj8dh5efv355e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
