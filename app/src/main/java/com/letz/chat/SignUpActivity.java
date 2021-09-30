@@ -94,6 +94,38 @@ public class SignUpActivity extends AppCompatActivity
             }
     );
 
+    public void signup(String email, String password, String username) {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            reference.child("Users")
+                                    .child(auth.getUid())
+                                    .child("userName")
+                                    .setValue(username);
+
+                            if (imageControl)//이미지 선택되었을 경우
+                            {
+
+                            } else // null 넣어준다.
+                            {
+                                reference.child("Users").child(auth.getUid()).child("image")
+                                        .setValue("null");
+                            }
+
+                            Intent igoMain = new Intent(SignUpActivity.this, MainActivity.class);
+                            igoMain.putExtra("userName", username);
+                            startActivity(igoMain);
+                            finish();
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "Failed SignUp", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+    }
 
 
 }
