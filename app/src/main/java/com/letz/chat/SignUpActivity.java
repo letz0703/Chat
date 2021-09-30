@@ -65,7 +65,6 @@ public class SignUpActivity extends AppCompatActivity
                 signup(userEmail, userPassword, userName);
             }
         });
-
     }
 
     public void imageChooser() {
@@ -94,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity
             }
     );
 
-    public void signup(String email, String password, String username) {
+    public void signup(String email, String password, String userName) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                 {
@@ -104,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity
                             reference.child("Users")
                                     .child(auth.getUid())
                                     .child("userName")
-                                    .setValue(username);
+                                    .setValue(userName);
 
                             if (imageControl)//이미지 선택되었을 경우
                             {
@@ -116,7 +115,7 @@ public class SignUpActivity extends AppCompatActivity
                             }
 
                             Intent igoMain = new Intent(SignUpActivity.this, MainActivity.class);
-                            igoMain.putExtra("userName", username);
+                            igoMain.putExtra("userName", userName);
                             startActivity(igoMain);
                             finish();
                         } else {
