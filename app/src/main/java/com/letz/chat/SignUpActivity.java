@@ -100,9 +100,7 @@ public class SignUpActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            reference.child("Users")
-                                    .child(auth.getUid())
-                                    .child("userName")
+                            reference.child("Users").child(auth.getUid()).child("userName")
                                     .setValue(userName);
 
                             if (imageControl)//이미지 선택되었을 경우
@@ -114,18 +112,18 @@ public class SignUpActivity extends AppCompatActivity
                                         .setValue("null");
                             }
 
-                            Intent igoMain = new Intent(SignUpActivity.this, MainActivity.class);
+                            Intent igoMain = new Intent(SignUpActivity.this
+                                    , MainActivity.class);
                             igoMain.putExtra("userName", userName);
                             startActivity(igoMain);
                             finish();
                         } else {
-                            Toast.makeText(SignUpActivity.this, "Failed SignUp", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this
+                                    ,"Failed SignUp", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
-
 
 }
 
