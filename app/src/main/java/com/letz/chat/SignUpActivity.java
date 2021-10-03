@@ -17,13 +17,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,7 +41,12 @@ public class SignUpActivity extends AppCompatActivity
     boolean imageControl = false;
     FirebaseAuth auth;
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference dbReference;
+
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +61,11 @@ public class SignUpActivity extends AppCompatActivity
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference();
+        dbReference = database.getReference();
+
+
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         ivCircle.setOnClickListener(v -> {
             imageChooser();
@@ -100,15 +115,26 @@ public class SignUpActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            reference.child("Users").child(auth.getUid()).child("userName")
+                            dbReference.child("Users").child(auth.getUid()).child("userName")
                                     .setValue(userName);
 
                             if (imageControl)//이미지 선택되었을 경우
                             {
+                                UUID randomID = UUID.randomUUID();
+                                String imageName = "images/"+randomID+".jpg";
+                                storageReference.child(imageName).putFile(imageUri)
+                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                        {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                            {
+                                                StorageReference storage_imageName = firebaseStorage.getReference(imageName);
+                                            }
+                                        });
 
                             } else // null 넣어준다.
                             {
-                                reference.child("Users").child(auth.getUid()).child("image")
+                                dbReference.child("Users").child(auth.getUid()).child("image")
                                         .setValue("null");
                             }
 
