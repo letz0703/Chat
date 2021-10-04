@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -48,8 +49,10 @@ public class SignUpActivity extends AppCompatActivity
 
     Uri imageUri;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -76,16 +79,18 @@ public class SignUpActivity extends AppCompatActivity
             String userPassword = password.getText().toString();
             String userName = name.getText().toString();
 
-            if (!userEmail.equals("") && !userPassword.equals("") && !userName.equals("")) {
+            if (!userEmail.equals("") && !userPassword.equals("") && !userName.equals(""))
+            {
                 signup(userEmail, userPassword, userName);
             }
         });
     }
 
-    public void imageChooser() {
+    public void imageChooser()
+    {
         //image 열기
         Intent i = new Intent();
-        i.setType("images/*");
+        i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
         launchLoadImage.launch(i);
     }
@@ -95,44 +100,78 @@ public class SignUpActivity extends AppCompatActivity
             new ActivityResultCallback<ActivityResult>()
             {
                 @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
+                public void onActivityResult(ActivityResult result)
+                {
+                    if (result.getResultCode() == RESULT_OK)
+                    {
                         Intent data = result.getData();
                         Uri imageUri = data.getData();
                         Picasso.get().load(imageUri).into(ivCircle);
+
                         imageControl = true;
-                    } else {
+                    }
+                    else
+                    {
                         imageControl = false;
                     }
                 }
             }
     );
 
-    public void signup(String email, String password, String userName) {
+    public void signup(String email, String password, String userName)
+    {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                 {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                    public void onComplete(@NonNull Task<AuthResult> task)
+                    {
+                        if (task.isSuccessful())
+                        {
                             dbReference.child("Users").child(auth.getUid()).child("userName")
                                     .setValue(userName);
 
                             if (imageControl)//이미지 선택되었을 경우
                             {
                                 UUID randomID = UUID.randomUUID();
-                                String imageName = "images/"+randomID+".jpg";
-                                storageReference.child(imageName).putFile(imageUri)
-                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                String imageName = "images/" + randomID + ".jpg";
+                                storageReference.child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+                                {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                    {
+                                        StorageReference storageReference_userName = firebaseStorage.getReference(userName);
+                                        storageReference_userName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
                                         {
                                             @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                                            public void onSuccess(Uri uri)
                                             {
-                                                StorageReference storage_imageName = firebaseStorage.getReference(imageName);
+                                                String filePath = uri.toString();
+                                                dbReference.child("Users").child(auth.getUid()).child("image")
+                                                        .setValue(filePath).addOnSuccessListener(new OnSuccessListener<Void>()
+                                                {
+                                                    @Override
+                                                    public void onSuccess(Void unused)
+                                                    {
+                                                        Toast.makeText(SignUpActivity.this, "write to db is successful", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener()
+                                                {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e)
+                                                    {
+                                                        Toast.makeText(SignUpActivity.this, "write to db is not successful", Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                });
                                             }
                                         });
 
-                            } else // null 넣어준다.
+                                    }
+                                });
+
+                            }
+                            else // null 넣어준다.
                             {
                                 dbReference.child("Users").child(auth.getUid()).child("image")
                                         .setValue("null");
@@ -143,9 +182,11 @@ public class SignUpActivity extends AppCompatActivity
                             igoMain.putExtra("userName", userName);
                             startActivity(igoMain);
                             finish();
-                        } else {
+                        }
+                        else
+                        {
                             Toast.makeText(SignUpActivity.this
-                                    ,"Failed SignUp", Toast.LENGTH_SHORT).show();
+                                    , "Failed SignUp", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
