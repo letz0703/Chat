@@ -30,14 +30,14 @@ public class MyLoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_login);
 
-        profile = findViewById(R.id.imageViewProfile);
-        email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
+        profile = findViewById(R.id.ivProfile_Login);
+        email = findViewById(R.id.etEmail_Login);
+        password = findViewById(R.id.etPassword_Login);
 
-        buttonSignIn = findViewById(R.id.buttonSignIn);
-        buttonSignUp = findViewById(R.id.buttonSignUp);
+        buttonSignIn = findViewById(R.id.btnSignin_Login);
+        buttonSignUp = findViewById(R.id.btnSignup_Login);
         
-        textViewForgot = findViewById(R.id.tvForgot_MyLoginActivity);
+        textViewForgot = findViewById(R.id.btnForgot_Login);
 
         auth = FirebaseAuth.getInstance();
 
