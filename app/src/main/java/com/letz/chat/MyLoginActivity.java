@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MyLoginActivity extends AppCompatActivity
 {
     ImageView profile;
-    private TextView email,password;
+    private TextView email, password;
     private Button buttonSignIn, buttonSignUp;
     private TextView textViewForgot;
 
@@ -36,7 +36,7 @@ public class MyLoginActivity extends AppCompatActivity
 
         buttonSignIn = findViewById(R.id.btnSignin_Login);
         buttonSignUp = findViewById(R.id.btnSignup_Login);
-        
+
         textViewForgot = findViewById(R.id.btnForgot_Login);
 
         auth = FirebaseAuth.getInstance();
@@ -45,53 +45,44 @@ public class MyLoginActivity extends AppCompatActivity
             String userEmail = email.getText().toString();
             String userPassword = password.getText().toString();
 
-            if (!email.equals("")&& !password.equals(""))
-            {
+            if (!email.equals("") && !password.equals("")) {
                 signin(userEmail, userPassword);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(MyLoginActivity.this, "Please enter and email and password.", Toast.LENGTH_SHORT).show();
             }
-
         });
 
         buttonSignUp.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MyLoginActivity.this,SignUpActivity.class);
+                Intent i = new Intent(MyLoginActivity.this, SignUpActivity.class);
                 startActivity(i);
             }
         });
-        
+
         textViewForgot.setOnClickListener(v -> {
-            Intent i = new Intent(MyLoginActivity.this,ForgotActivity.class);
+            Intent i = new Intent(MyLoginActivity.this, ForgotActivity.class);
             startActivity(i);
         });
-       
+
 
     }
 
-    public void signin(String email, String password)
-    {
+    public void signin(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
-        .addOnCompleteListener(new OnCompleteListener<AuthResult>()
-        {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                 {
-                    Intent i = new Intent(MyLoginActivity.this,MainActivity.class);
-                    Toast.makeText(MyLoginActivity.this, "Sign in is successful", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(MyLoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent i = new Intent(MyLoginActivity.this, MainActivity.class);
+                            Toast.makeText(MyLoginActivity.this, "Sign in is successful", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MyLoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
 }
