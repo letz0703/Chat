@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MyLoginActivity extends AppCompatActivity
 {
@@ -24,6 +25,19 @@ public class MyLoginActivity extends AppCompatActivity
     private TextView textViewForgot;
 
     FirebaseAuth auth;
+    FirebaseUser firebaseUser;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        // fb user가 있으면
+        if(firebaseUser != null)
+        {
+            Intent iMainActivity = new Intent(MyLoginActivity.this, MainActivity.class);
+            startActivity(iMainActivity);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
