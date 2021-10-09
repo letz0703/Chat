@@ -62,6 +62,7 @@ public class SignUpActivity extends AppCompatActivity
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+
         database = FirebaseDatabase.getInstance();
         dbReference = database.getReference();
 
