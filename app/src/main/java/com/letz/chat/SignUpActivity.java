@@ -9,17 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,11 +54,11 @@ public class SignUpActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        ivCircle = findViewById(R.id.ivCircle_Signup);
+        ivCircle = findViewById(R.id.ivCircle_ProfileActivity);
         email = findViewById(R.id.etEmail_Signup);
         password = findViewById(R.id.etPassword_Signup);
         name = findViewById(R.id.etUserName_Signup);
-        register = findViewById(R.id.btnRegister_Signup);
+        register = findViewById(R.id.btnUpdateProfile_ProfileActivity);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();

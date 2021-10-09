@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SignUpActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/ivCircle_ProfileActivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            android:src="@color/purple_700" />
+
+    <Button
+            android:text="Update Profile"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnUpdateProfile_ProfileActivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="48dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="UserName"
+            android:gravity="center"
+            android:id="@+id/etUserName_ProfileActivity"
+            tools:layout_editor_absoluteY="268dp"
+            tools:layout_editor_absoluteX="55dp" />
+
+    <TextView
+            android:text="tap to update photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            tools:layout_editor_absoluteY="181dp"
+            tools:layout_editor_absoluteX="144dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

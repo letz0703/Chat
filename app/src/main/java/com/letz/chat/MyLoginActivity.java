@@ -34,7 +34,7 @@ public class MyLoginActivity extends AppCompatActivity
         // fb user가 있으면
         if(firebaseUser != null)
         {
-            Intent iMainActivity = new Intent(MyLoginActivity.this, MainActivity.class);
+           Intent iMainActivity = new Intent(MyLoginActivity.this, MainActivity.class);
             startActivity(iMainActivity);
         }
     }
