@@ -48,6 +48,9 @@ public class ProfileActivity extends AppCompatActivity
     Uri imageUri;
     Boolean imageControl = false;
 
+    String image;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,9 +119,9 @@ public class ProfileActivity extends AppCompatActivity
                 }
             });
 
-        } else // null 넣어준다.
+        } else
         {
-//                                dbReference.child("Users").child(auth.getUid()).child("image").setValue("null");
+            fdbref.child("Users").child(auth.getUid()).child("image").setValue(image);
         }
 
         Intent igoMain = new Intent(ProfileActivity.this, MainActivity.class);
@@ -134,13 +137,13 @@ public class ProfileActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String name = snapshot.child("userName").getValue().toString();
-                        String image = snapshot.child("image").getValue().toString();
+                        image = snapshot.child("image").getValue().toString();
                         etUserName.setText(name);
 
                         //만약 이미지가 없으면 = null 일 경우
                         if (image.equals("null")) {
 //                            Default image
-                            ivCircleProfile.setImageResource(R.drawable.userIcon);
+                            ivCircleProfile.setImageResource(R.drawable.user_icon);
                         } else {
                             Picasso.get().load(image).into(ivCircleProfile);
                         }
