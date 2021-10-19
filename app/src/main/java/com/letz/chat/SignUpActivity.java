@@ -162,7 +162,8 @@ public class SignUpActivity extends AppCompatActivity
                             }
 
                             Intent igoMain = new Intent(SignUpActivity.this, MainActivity.class);
-                            igoMain.putExtra("userName", userName);
+                            //delte putExtra("userName",userName) 왜냐면 Adapter사용. DB에서 userName 가져올 것임
+//                            igoMain.putExtra("userName", userName);
                             startActivity(igoMain);
                             finish();
                         } else {
