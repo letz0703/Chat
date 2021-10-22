@@ -76,15 +76,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>
                         mContext.startActivity(igoMyChatActivity);
                     }
                 });
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        })
+        });
 
     }
 
