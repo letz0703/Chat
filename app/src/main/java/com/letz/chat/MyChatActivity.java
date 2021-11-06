@@ -1,6 +1,7 @@
 package com.letz.chat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,10 +16,14 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyChatActivity extends AppCompatActivity
@@ -46,7 +51,7 @@ public class MyChatActivity extends AppCompatActivity
         rvChat = findViewById(R.id.rv_Chat);
 
         database = FirebaseDatabase.getInstance();
-        fdbref= database.getReference("");
+        fdbref = database.getReference("");
 
         userName = getIntent().getStringExtra("userName");
         fdbName = getIntent().getStringExtra("fdbName");
@@ -57,7 +62,7 @@ public class MyChatActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //open Main Activity
-                Intent igoMainActivity = new Intent(MyChatActivity.this,MainActivity.class);
+                Intent igoMainActivity = new Intent(MyChatActivity.this, MainActivity.class);
                 startActivity(igoMainActivity);
             }
         });
@@ -67,18 +72,58 @@ public class MyChatActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String message = etChat.getText().toString();
-                if (!message.equals(""))
-                {
+                if (!message.equals("")) {
                     sendMessage(message);
                     etChat.setText("");
 
                 }
             }
         });
+
+        getMessage();
     }
 
-    private void sendMessage(String message)
-    {
+    public void getMessage() {
+    // message from the database
+        fdbref.child("Messages").child(userName).child(fdbName)
+                .addChildEventListener(new ChildEventListener()
+        {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                ModelClass modelClass = snapshot.getValue(ModelClass.class);
+                list.add(modelClass);
+                adapter.notifyDataSetChated();
+                // show most recent message on the screen
+                rvChat.scrollToPosition(list.Size()-1);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        adapter = new MessageAdapter(list, userName);
+        rvChat.setAdapter(adapter);
+    }
+
+    private void sendMessage(String message) {
         final String key = fdbref.child("Messages").child(userName).child(fdbName).push().getKey();
         final Map<String, Object> messageMap = new HashMap<>();
         messageMap.put("message", message);
@@ -88,8 +133,7 @@ public class MyChatActivity extends AppCompatActivity
                 {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             fdbref.child("Messages").child(fdbName).child(userName)
                                     .child(key).setValue(messageMap);
                         }
